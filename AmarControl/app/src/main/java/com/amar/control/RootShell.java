@@ -33,6 +33,11 @@ public final class RootShell {
         }
     }
 
+
+    public static Process start(String command) throws java.io.IOException {
+        return new ProcessBuilder("su", "-c", command).redirectErrorStream(true).start();
+    }
+
     public static boolean hasRoot() {
         Result r = run("id", 4);
         return r.ok() && r.out.contains("uid=0");

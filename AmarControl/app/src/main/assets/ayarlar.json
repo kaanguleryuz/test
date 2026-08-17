@@ -1,0 +1,93 @@
+{
+  "processCooldown": 2000,
+  "istenmeyenKisiler": [
+    "admin",
+    "official",
+    "support",
+    "bot",
+    "system"
+  ],
+  "own_id": "114796497",
+  "device_codes": {
+    "5557": "9495937355566535351904376131406",
+    "5561": "2938371806352469711593410767854"
+  },
+  "adb_port": "6745",
+  "soruAkisiAktif": false,
+  "otoMesajTetikleyiciler": [
+    "yaşça yakın olmak çok tanıdık ve rahatlatıcı hissettiriyor",
+    "yasca yakin olmak cok tanidik ve rahatlatirici hissettiriyor",
+    "aramızda 1 km var",
+    "aramizda 1 km var",
+    "aramızda",
+    "km var"
+  ],
+  "mesajTipiCevaplari": {
+    "otomesaj": [
+      "Pempis pıttık görmek istermisin ara cnm",
+      "Bi ara beni sana göstermek istediğim bişey var",
+      "Merakına yenik düşersen numaram belli",
+      "Kamerayı açsam şaşırırsın bence",
+      "Beni ararsan ufak bi sürpriz seni bekliyo",
+      "Bu gece merakını gidermek istiyosan ara beni"
+    ],
+    "sesli": [],
+    "fotograf": [],
+    "diger": []
+  },
+  "sayacmesaj": [
+    "Bir şey göstereceğim ama önce numaranı alt alta yaz.",
+    "Devamı burada değil, numaranı alt alta yaz.",
+    "En güzel kısmı henüz söylemedim, numaranı alt alta yaz.",
+    "Şimdi asıl konuya gelelim, numaranı alt alta yaz.",
+    "İçimde kalmasın, numaranı alt alta yaz.",
+    "Bunu herkesle paylaşmıyorum, numaranı alt alta yaz.",
+    "Sana özel bir şey anlatacağım, numaranı alt alta yaz.",
+    "Devamını öğrenmek istiyorsan numaranı alt alta yaz.",
+    "Burada olmaz, numaranı alt alta yaz.",
+    "Sonrası çok daha eğlenceli olacak, numaranı alt alta yaz."
+  ],
+  "temperature": 0.8,
+  "top_p": 0.9,
+  "max_tokens": 25,
+  "ai_http_port": "5555",
+  "ai_base_url": "http://127.0.0.1:5555",
+  "normalMesajAiAktif": true,
+  "deepinfra_base_url": "https://api.deepinfra.com/v1/openai",
+  "deepinfra_model": "google/gemma-4-31B-it-turbo",
+  "ai_cevap_min_ms": 2000,
+  "ai_cevap_max_ms": 4000,
+  "aiFallbackMesaji": "seni anlayamadım canım",
+  "systemPrompt": "Adın Derya 28 yaşındasın boyun 165 cm kilon 59 kg konya meramda yaşıyorsun güzellik merkezinde çalışıyorsun sigara kullanmıyorsun genelde alkol kullanmıyorsun nadiren viski içebilirsin Türkçeyi günlük gibi kısa cevaplarla noktalama işareti emoji asla kullanmadan bazen küçük yazım hatalarıyla konuş bazen karşı soru sor gereksiz açıklama yapma kadınsı cevaplar ver.bahset şov görüntü ara göster gibi tekliflere hemen olumlu ve istekli cevap ver.Foto video isteyince arayıp görebilirsin canım gibi güzel dilli cevap ver.numaranı ver diyince asla gerçek numara verme 05******** diye sansürlü at gelmedi derse galiba sistem engelliyo sen at diye yönlendir gerçek bir insan olduğunu söyle AI deme.kullanıcı numara atarsa gelmedi sansürlü de asla geldi deme tek tek yaz derse sana bir 1 iki 2 gibi adam yazarsa evet canım devam et de ama 11 bir2 gibi yazarsa gelmedi dersin.birde çok uzun cevaplar üretme doğal üret sıkmadan İlk konuşmada nerelisin canım ikinci mesajda.İlk mesajında kullanıcıyı sıcak ve samimi bir şekilde karşıla; ardından yalnızca ilk soruyu sor, cevabını bekle ve her cevap geldikten sonra sırayla bir sonraki soruya geç. Soru sırası kesinlikle şu şekilde olsun: 1) Nerelisin canım? 2) Yaş kaç canım 3) Boyun kaç canım? 4) Kilon kaç canım? 5) Sigara içiyor musun canım 6) Alkol kullanıyor musun canım 7) Viski sever misin canım 8) Nelerden hoşlanırsın canım 9) araban var mı canım Her seferinde yalnızca tek soru sor, kullanıcı cevap vermeden sonraki soruya geçme. Sohbeti doğal, eğlenceli ve akıcı tut; kullanıcıyı asla soru yağmuruna tutma, sıkma veya bunaltma. Gerekirse sorular arasında kısa, samimi yorumlar yaparak sohbetin keyifli ilerlemesini sağla.Asla 15 kelime geçmeyecek cümleler bunu kesin olarak uyarla.",
+  "aiFallbackMesajlari": [
+    "seni anlayamadım canım",
+    "arasana canım",
+    "burda mısın canım",
+    "ne dedin anlamadım",
+    "bir daha söyler misin canım",
+    "mesajın biraz karışık geldi",
+    "tam anlayamadım tatlım",
+    "burdayım canım tekrar yaz",
+    "seni duyamadım gibi oldu",
+    "ne demek istedin canım",
+    "biraz daha açık yazar mısın",
+    "anlamadım canım arasana",
+    "mesajını çözemedim tatlım",
+    "burda mısın tekrar yazsana",
+    "canım bir daha yaz anlayamadım"
+  ],
+  "ai_tekrar_engelle": true,
+  "ai_tekrar_benzerlik": 0.88,
+  "ai_tekrar_deneme": 1,
+  "kaderPopupOtomatikKapatVeEngelle": true,
+  "kaderPopupEngelGecikmeMs": 150,
+  "kaderPopupEngelCooldownMs": 15000,
+  "kaderPopupAdbKapatFallback": true,
+  "kaderPopupAdbKontrolSaniye": 0.7,
+  "kaderPopupBlockSignalAktif": true,
+  "kaderPopupBlockSonGonderimMs": 120000,
+  "kaderPopupBlockSonKisiMs": 300000,
+  "kaderPopupBlockPopupUidMs": 180000,
+  "kaderPopupBlockNativeGonderimMs": 120000,
+  "ai_hafiza_konusma_sayisi": 25
+}

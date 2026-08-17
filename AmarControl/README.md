@@ -1,35 +1,26 @@
-# Amar Control 0.2 – Android 11 / Magisk overlay test
+# Amar Control v0.3 - Magisk + Frida standalone test
 
-Bu proje, fiziksel Android 11 + Magisk telefonda APK kabuğunu test etmek için hazırlanmıştır.
+Bu sürüm v0.2 overlay testinin üstüne gerçek bot runtime katmanını ekler.
 
-## Bu testte çalışanlar
-- Magisk root kontrolü (`su -c id`)
-- Android sürümü ve CPU ABI tespiti
-- Foreground service + kalıcı bildirim
-- Amar açıkken diğer uygulamaların üzerinde kalan sürüklenebilir mavi `A` balonu
-- Balona dokununca açılan kayan panel
-- Panelde: Arka plan testini başlat/durdur, Amar'ı aç, root durumu, canlı loglar, servisi kapat
-- Amar process durumunu root üzerinden 5 saniyede bir kontrol etme
-- `START_STICKY` arka plan servisi
+## İçerik
+- Foreground service + Amar üstünde kayan A menüsü
+- Magisk `su` ile doğrudan cihaz içi komutlar
+- Frida 17.17.0 `frida-inject` ilk BOTU BAŞLAT kullanımında resmi GitHub release üzerinden cihaz ABI'sine göre indirilir
+- `amar-bot.js` `/data/local/tmp/amar-bot.js` konumuna taşınır ve Amar PID'sine inject edilir
+- `ayarlar.json` `/data/local/tmp/ayarlar.json` konumuna atomik yazılır
+- AI servisi `127.0.0.1:5555/chat` üzerinde APK içinde çalışır
+- DeepInfra API anahtarı APK/repo içine gömülmez; uygulama içinden bir kez girilir ve private SharedPreferences'ta tutulur
+- AI geçmişi yalnızca RAM'de tutulur
+- JS heartbeat ve IDFILE_DATA çıktıları APK tarafından işlenir
 
-## Telefonda test sırası
-1. APK'yı kur ve aç.
-2. `ROOT KONTROL`e bas. Magisk sorarsa izin ver.
-3. `KAYAN MENÜYÜ AÇ`a bas.
-4. Android 11 izin ekranında `Amar Control` için `Diğer uygulamaların üzerinde göster` iznini aç.
-5. Uygulamaya dönüp tekrar `KAYAN MENÜYÜ AÇ`a bas.
-6. `AMAR'I AÇ`a bas.
-7. Amar'ın üzerinde mavi `A` balonu görünmeli. Balonu sürükleyebilirsin.
-8. Balona dokun ve `ARKA PLAN TESTİNİ BAŞLAT`a bas.
-9. Menüde `Root ✓ · Amar AÇIK` görülmesi beklenir. Canlı loglarda PID, Android sürümü ve ABI görünür.
+## İlk kurulum
+v0.2 GitHub Actions debug imzası farklı olduğu için v0.3 kurulmadan önce v0.2'yi kaldırmak gerekebilir. v0.3 ve sonraki testler sabit test keystore ile imzalanır.
 
-## Build
-Android Studio ile klasörü açıp `Build > Build APK(s)` kullan.
+1. APK'yı kur
+2. Overlay iznini ver
+3. AI / KENDİ ID AYARLARI bölümünde own_id ve DeepInfra key'i kaydet
+4. BOTU BAŞLAT
+5. İlk seferde Frida indirmesinin bitmesini bekle
+6. Amar açıldığında logda `BOT AKTİF` ve `Mesaj dinleme aktif` beklenir
 
-- applicationId: `com.amar.control`
-- minSdk: 26
-- targetSdk: 30
-- Android 11 hedefi: API 30
-
-## Kapsam
-Bu 0.2 test sürümü yalnızca root, overlay, foreground-service ve Amar process erişimini doğrular. Otomatik mesaj gönderme, kullanıcı taklidi veya kişisel iletişim bilgisi toplama davranışı içermez.
+Bu bir test sürümüdür. Frida/ROM uyumluluğu telefona göre değişebilir.
