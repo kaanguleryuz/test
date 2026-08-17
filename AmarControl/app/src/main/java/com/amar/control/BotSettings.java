@@ -13,6 +13,7 @@ public final class BotSettings {
     private static final String PREF = "amar_control_settings";
     private static final String KEY_API = "deepinfra_api_key";
     private static final String KEY_OWN = "own_id";
+    private static final String KEY_AI_PORT = "ai_http_port";
 
     private BotSettings() {}
 
@@ -20,8 +21,9 @@ public final class BotSettings {
         String raw = readAsset(context, "ayarlar.json");
         JSONObject o = new JSONObject(raw);
         o.remove("deepinfra_api_key");
-        o.put("ai_http_port", "5555");
-        o.put("ai_base_url", "http://127.0.0.1:5555");
+        int aiPort = getAiPort(context);
+        o.put("ai_http_port", String.valueOf(aiPort));
+        o.put("ai_base_url", "http://127.0.0.1:" + aiPort);
 
         String own = prefs(context).getString(KEY_OWN, "");
         if (own != null && !own.trim().isEmpty()) o.put("own_id", own.trim());
@@ -49,6 +51,16 @@ public final class BotSettings {
     public static boolean hasApiKey(Context context) {
         String s = getApiKey(context);
         return s != null && !s.trim().isEmpty();
+    }
+
+    public static int getAiPort(Context context) {
+        int p = prefs(context).getInt(KEY_AI_PORT, 5555);
+        return (p >= 1024 && p <= 65535) ? p : 5555;
+    }
+
+    public static void setAiPort(Context context, int port) {
+        if (port < 1024 || port > 65535) port = 5555;
+        prefs(context).edit().putInt(KEY_AI_PORT, port).apply();
     }
 
     private static SharedPreferences prefs(Context context) {

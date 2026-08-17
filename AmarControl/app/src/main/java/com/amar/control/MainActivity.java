@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements AppLog.Listener {
         title.setGravity(Gravity.CENTER_HORIZONTAL);
         root.addView(title);
 
-        TextView sub = text("Magisk · Frida · arka plan bot v0.3", 14, Color.LTGRAY);
+        TextView sub = text("Magisk · Frida · arka plan bot v0.3.1", 14, Color.LTGRAY);
         sub.setGravity(Gravity.CENTER_HORIZONTAL);
         root.addView(sub);
 
@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements AppLog.Listener {
 
         setContentView(root);
         AppLog.listen(this);
-        AppLog.add("Panel v0.3 açıldı · SDK " + Build.VERSION.SDK_INT);
+        AppLog.add("Panel v0.3.1 açıldı · SDK " + Build.VERSION.SDK_INT);
         refreshStatus();
     }
 

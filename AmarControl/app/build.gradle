@@ -8,8 +8,8 @@ android {
         applicationId 'com.amar.control'
         minSdk 26
         targetSdk 30
-        versionCode 3
-        versionName '0.3-frida-bot-test'
+        versionCode 4
+        versionName '0.3.1-frida-port-fix'
     }
 
     signingConfigs {

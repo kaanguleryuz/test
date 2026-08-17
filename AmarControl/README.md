@@ -24,3 +24,7 @@ v0.2 GitHub Actions debug imzası farklı olduğu için v0.3 kurulmadan önce v0
 6. Amar açıldığında logda `BOT AKTİF` ve `Mesaj dinleme aktif` beklenir
 
 Bu bir test sürümüdür. Frida/ROM uyumluluğu telefona göre değişebilir.
+
+
+## v0.3.1
+- AI local port collision fixed: tries 5555-5565 automatically and updates ai_base_url.

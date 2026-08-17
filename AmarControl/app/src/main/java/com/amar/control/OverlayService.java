@@ -97,7 +97,7 @@ public class OverlayService extends Service {
     private void makePanel() {
         panel = new LinearLayout(this); panel.setOrientation(LinearLayout.VERTICAL); panel.setPadding(18,18,18,18);
         panel.setBackground(bg(Color.argb(245,24,24,28),24)); panel.setVisibility(View.GONE);
-        TextView h=new TextView(this); h.setText("AMAR CONTROL v0.3"); h.setTextColor(Color.WHITE); h.setTextSize(16); h.setGravity(Gravity.CENTER_HORIZONTAL); panel.addView(h);
+        TextView h=new TextView(this); h.setText("AMAR CONTROL v0.3.1"); h.setTextColor(Color.WHITE); h.setTextSize(16); h.setGravity(Gravity.CENTER_HORIZONTAL); panel.addView(h);
         stateText=new TextView(this); stateText.setText("Hazır"); stateText.setTextColor(Color.LTGRAY); stateText.setTextSize(13); stateText.setPadding(8,10,8,12); stateText.setGravity(Gravity.CENTER_HORIZONTAL); panel.addView(stateText);
         panel.addView(btn("BOTU BAŞLAT", v -> bot.start()));
         panel.addView(btn("BOTU DURDUR", v -> bot.stop()));

@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -47,30 +48,60 @@ public final class LocalAiServer {
         this.context = context.getApplicationContext();
     }
 
-    public synchronized void start() {
-        if (running) return;
+    public synchronized int start() throws Exception {
+        if (running && server != null && !server.isClosed()) return server.getLocalPort();
         if (clients == null || clients.isShutdown()) clients = Executors.newCachedThreadPool();
+
+        ServerSocket chosen = null;
+        int preferred = BotSettings.getAiPort(context);
+        int[] ports = new int[11];
+        ports[0] = preferred;
+        int idx = 1;
+        for (int p = 5555; p <= 5565; p++) {
+            if (p != preferred) ports[idx++] = p;
+        }
+
+        Exception last = null;
+        for (int i = 0; i < idx; i++) {
+            int port = ports[i];
+            try {
+                ServerSocket s = new ServerSocket();
+                s.setReuseAddress(true);
+                s.bind(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), port), 16);
+                chosen = s;
+                break;
+            } catch (Exception e) {
+                last = e;
+            }
+        }
+        if (chosen == null) throw new IllegalStateException("5555-5565 arasında boş AI portu yok", last);
+
+        server = chosen;
         running = true;
+        int activePort = chosen.getLocalPort();
+        BotSettings.setAiPort(context, activePort);
+        AppLog.add("AI servis: http://127.0.0.1:" + activePort + "/chat");
+        if (activePort != 5555) AppLog.add("AI port 5555 dolu · otomatik " + activePort + " seçildi");
+        AppLog.add(BotSettings.hasApiKey(context)
+                ? "DeepInfra anahtarı hazır"
+                : "DeepInfra anahtarı yok · normal mesajlarda fallback kullanılacak");
         acceptThread = new Thread(this::acceptLoop, "amar-ai-server");
         acceptThread.start();
+        return activePort;
     }
 
     public synchronized void stop() {
         running = false;
         try { if (server != null) server.close(); } catch (Exception ignored) {}
+        server = null;
         clients.shutdownNow();
         history.clear();
     }
 
     private void acceptLoop() {
         try {
-            ServerSocket s = new ServerSocket(5555, 16, InetAddress.getByName("127.0.0.1"));
-            s.setReuseAddress(true);
-            server = s;
-            AppLog.add("AI servis: http://127.0.0.1:5555/chat");
-            AppLog.add(BotSettings.hasApiKey(context)
-                    ? "DeepInfra anahtarı hazır"
-                    : "DeepInfra anahtarı yok · normal mesajlarda fallback kullanılacak");
+            ServerSocket s = server;
+            if (s == null) throw new IllegalStateException("AI socket hazırlanmadı");
             while (running) {
                 Socket c = s.accept();
                 clients.submit(() -> handle(c));

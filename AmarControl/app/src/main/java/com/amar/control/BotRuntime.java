@@ -86,7 +86,8 @@ public final class BotRuntime {
             return;
         }
         try {
-            aiServer.start();
+            int aiPort = aiServer.start();
+            AppLog.add("AI port hazır · " + aiPort);
             prepareStaticFiles();
             ensureFridaInject();
             restoreIdFile();
