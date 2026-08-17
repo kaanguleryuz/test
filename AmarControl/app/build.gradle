@@ -1,0 +1,14 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.amar.control'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.amar.control'
+        minSdk 26
+        targetSdk 30
+        versionCode 2
+        versionName '0.2-overlay-test'
+    }
+}
