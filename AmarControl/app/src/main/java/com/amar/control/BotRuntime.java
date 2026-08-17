@@ -29,6 +29,7 @@ public final class BotRuntime {
     private volatile String status = "Bot kapalı";
     private volatile Process injectProcess;
     private volatile long lastHeartbeat;
+    private volatile long attachStartedAt;
     private volatile boolean attached;
     private Thread worker;
     private Thread watchdog;
@@ -110,6 +111,7 @@ public final class BotRuntime {
 
                 syncConfig();
                 lastHeartbeat = System.currentTimeMillis();
+                attachStartedAt = System.currentTimeMillis();
                 attached = false;
                 setStatus("Frida bağlanıyor · PID " + pid);
                 AppLog.add("Frida " + FRIDA_VERSION + " · Amar PID " + pid + " attach");
@@ -124,6 +126,7 @@ public final class BotRuntime {
                 try { p.waitFor(); } catch (Exception ignored) {}
                 injectProcess = null;
                 attached = false;
+                attachStartedAt = 0L;
                 if (wanted.get()) {
                     setStatus("Bağlantı koptu · yeniden deneniyor");
                     AppLog.add("Frida oturumu kapandı · tekrar bağlanacak");
@@ -140,9 +143,24 @@ public final class BotRuntime {
 
     private void watchdogLoop() {
         while (wanted.get()) {
-            sleep(5000);
+            sleep(2000);
             if (!wanted.get()) break;
-            if (attached && System.currentTimeMillis() - lastHeartbeat > 70000) {
+            long now = System.currentTimeMillis();
+
+            // Eski sürüm burada takılı kalıyordu: attached=false iken watchdog hiçbir şey yapmıyordu.
+            // 25 saniye içinde JS yüklenmezse injector'ı öldür ve ana döngünün yeniden bağlanmasını sağla.
+            if (!attached && injectProcess != null && attachStartedAt > 0 && now - attachStartedAt > 25000) {
+                AppLog.add("Frida attach 25 sn içinde tamamlanmadı · yeniden deneniyor");
+                setStatus("Frida attach zaman aşımı · yeniden deneniyor");
+                try { injectProcess.destroy(); } catch (Exception ignored) {}
+                sleep(250);
+                try { if (injectProcess != null && injectProcess.isAlive()) injectProcess.destroyForcibly(); } catch (Exception ignored) {}
+                RootShell.run("pkill -f amar-frida-inject >/dev/null 2>&1 || true", 3);
+                attachStartedAt = 0L;
+                continue;
+            }
+
+            if (attached && now - lastHeartbeat > 70000) {
                 AppLog.add("HEARTBEAT zaman aşımı · Frida yeniden bağlanıyor");
                 attached = false;
                 try { if (injectProcess != null) injectProcess.destroy(); } catch (Exception ignored) {}
@@ -164,6 +182,7 @@ public final class BotRuntime {
         }
         if (line.contains("Mesaj dinleme aktif") || line.contains("Ayarlar yüklendi")) {
             attached = true;
+            attachStartedAt = 0L;
             lastHeartbeat = System.currentTimeMillis();
             setStatus("BOT AKTİF ✓");
         }
